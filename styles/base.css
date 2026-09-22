@@ -1,0 +1,433 @@
+/* ------------------------------------------------------------------ */
+/*  WINSUME — base: reset, typography, controls, browser surfaces      */
+/* ------------------------------------------------------------------ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* --- selection / caret / scrollbar --------------------------------- */
+
+::selection {
+  background: var(--bronze);
+  color: var(--graphite-950);
+}
+
+.dark ::selection,
+.on-dark ::selection {
+  background: var(--bronze);
+  color: var(--graphite-950);
+}
+
+:focus-visible {
+  outline: 2px solid var(--bronze);
+  outline-offset: 3px;
+}
+
+.dark :focus-visible,
+.on-dark :focus-visible {
+  outline-color: var(--bronze-bright);
+}
+
+/* --- layout shells -------------------------------------------------- */
+
+.container {
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--space-section);
+  position: relative;
+}
+
+.section--dark {
+  background: var(--graphite-900);
+  color: var(--paper);
+}
+
+.section--paper2 {
+  background: var(--paper-2);
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 200;
+  transform: translateY(-300%);
+  background: var(--graphite-950);
+  color: var(--paper);
+  padding: 0.7rem 1.2rem;
+  font-size: var(--text-small);
+  letter-spacing: 0.04em;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
+
+/* --- typography ------------------------------------------------------ */
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 560;
+  font-stretch: 118%;
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.display {
+  font-size: var(--text-display);
+  line-height: 0.99;
+}
+
+.display-2 {
+  font-size: var(--text-display-2);
+}
+
+.display-3 {
+  font-size: var(--text-display-3);
+}
+
+.lead {
+  font-size: var(--text-lead);
+  line-height: 1.6;
+  max-width: 62ch;
+  color: var(--stone-700);
+}
+
+.on-dark .lead,
+.section--dark .lead {
+  color: var(--stone-400);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Section sheet label — architectural drawing annotation + wayfinding
+   (doubles as the floor number used by the fixed indicator rail). */
+.sheet {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: clamp(1.6rem, 1rem + 1.6vw, 2.6rem);
+}
+
+.sheet__no {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: var(--bronze-deep);
+  white-space: nowrap;
+}
+
+.section--dark .sheet__no,
+.on-dark .sheet__no {
+  color: var(--bronze-bright);
+}
+
+.sheet__rule {
+  flex: 0 1 4.5rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.4;
+}
+
+.sheet__title {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--stone-700);
+  white-space: nowrap;
+}
+
+.section--dark .sheet__title,
+.on-dark .sheet__title {
+  color: var(--stone-400);
+}
+
+/* --- buttons --------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 1.02rem 1.9rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn--primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.btn--primary:hover {
+  background: var(--graphite-700);
+}
+
+.btn--bronze {
+  background: var(--bronze);
+  color: var(--graphite-950);
+}
+
+.btn--bronze:hover {
+  background: var(--bronze-bright);
+}
+
+.btn--ghost {
+  border-color: var(--line-ink-strong);
+  color: var(--ink);
+}
+
+.btn--ghost:hover {
+  border-color: var(--ink);
+  background: rgba(22, 23, 27, 0.05);
+}
+
+.btn--ghost-light {
+  border-color: var(--line-paper-strong);
+  color: var(--paper);
+}
+
+.btn--ghost-light:hover {
+  border-color: var(--paper);
+  background: rgba(244, 241, 235, 0.07);
+}
+
+.btn .arrow {
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.btn:hover .arrow {
+  transform: translateX(4px);
+}
+
+.text-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  color: inherit;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.86rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--bronze);
+  padding-bottom: 0.28rem;
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+
+.text-link:hover {
+  color: var(--bronze-deep);
+}
+
+.section--dark .text-link:hover,
+.on-dark .text-link:hover {
+  color: var(--bronze-bright);
+}
+
+/* --- pending-verification treatment (content integrity) -------------- */
+
+.pending-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bronze-deep);
+  border: 1px dashed var(--bronze);
+  padding: 0.28rem 0.6rem;
+  max-width: 100%;
+  text-wrap: wrap;
+}
+
+.section--dark .pending-tag,
+.on-dark .pending-tag {
+  color: var(--bronze-bright);
+}
+
+/* --- reveal motion ---------------------------------------------------- */
+
+[data-reveal],
+[data-hero-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity var(--dur-slow) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+[data-reveal].is-in,
+[data-hero-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-line {
+  display: block;
+  overflow: hidden;
+}
+
+.reveal-line > span {
+  display: block;
+  transform: translateY(110%);
+  transition: transform 1s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+.is-in .reveal-line > span,
+.reveal-line.is-in > span {
+  transform: none;
+}
+
+/* Elevator-door image reveal */
+.doors {
+  position: relative;
+  overflow: hidden;
+}
+
+.doors::before,
+.doors::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: var(--paper-3);
+  transition: transform 1.05s var(--ease-door);
+}
+
+.doors::before {
+  clip-path: inset(0 50% 0 0);
+}
+
+.doors::after {
+  clip-path: inset(0 0 0 50%);
+}
+
+.doors.is-in::before {
+  transform: translateX(-101%);
+}
+
+.doors.is-in::after {
+  transform: translateX(101%);
+}
+
+.section--dark .doors::before,
+.section--dark .doors::after,
+.on-dark .doors::before,
+.on-dark .doors::after {
+  background: var(--graphite-800);
+}
+
+/* Floor ticks — recurring architectural device */
+.ticks {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.tick {
+  height: 1px;
+  background: currentColor;
+  opacity: 0.35;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-hero-reveal],
+  .reveal-line > span {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .doors::before,
+  .doors::after {
+    display: none;
+  }
+
+  .drawer,
+  .drawer.is-open {
+    transition: none;
+  }
+}
